@@ -25,7 +25,24 @@ FROM customers
 GROUP BY num_of_products
 ORDER BY num_of_products;
 
--- 3. High-risk profile churn rate (90.48%!)
+-- 3. Churn by active membership status
+SELECT
+    is_active_member,
+    COUNT(*) AS total,
+    SUM(exited) AS churned,
+    ROUND(SUM(exited) * 100.0 / COUNT(*), 2) AS churn_rate
+FROM customers
+GROUP BY is_active_member;
+
+-- 4. High-risk customer profile
+SELECT COUNT(*) AS high_risk_customers
+FROM customers
+WHERE age >= 50
+  AND is_active_member = 0
+  AND geography = 'Germany'
+  AND num_of_products IN (1, 3, 4);
+
+-- 5. High-risk profile churn rate (90.48%!)
 SELECT
     COUNT(*) AS total_risky,
     SUM(exited) AS churned,
@@ -35,6 +52,3 @@ WHERE age >= 50
   AND is_active_member = 0
   AND geography = 'Germany'
   AND num_of_products IN (1, 3, 4);
-
-
-

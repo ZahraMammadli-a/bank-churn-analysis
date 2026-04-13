@@ -17,3 +17,8 @@ CREATE TABLE customers (
     estimated_salary NUMERIC(15,2),
     exited INTEGER
 );
+
+-- Import CSV data after creating table:
+-- Right-click on customers table → Import/Export Data
+-- Select: Churn_Modelling.csv
+-- Header: ON, Delimiter: ,

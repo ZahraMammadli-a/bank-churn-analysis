@@ -20,3 +20,12 @@ SELECT
 FROM customers
 GROUP BY geography
 ORDER BY churn_rate DESC;
+
+-- 4. Churn by gender
+SELECT
+    gender,
+    COUNT(*) AS total,
+    SUM(exited) AS churned,
+    ROUND(SUM(exited) * 100.0 / COUNT(*), 2) AS churn_rate
+FROM customers
+GROUP BY gender;

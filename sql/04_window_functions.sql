@@ -1,6 +1,6 @@
 -- Window Functions Examples
 
--- 1. ROW_NUMBER - Rank customers by balance
+-- 1. ROW_NUMBER - Rank customers by balance within each country
 SELECT
     customer_id,
     surname,
@@ -24,7 +24,7 @@ SELECT * FROM (
 ) ranked
 WHERE rank <= 3;
 
--- 3. Running total of balance
+-- 3. Running total of balance by country
 SELECT
     customer_id,
     geography,
@@ -39,8 +39,19 @@ SELECT
     customer_id,
     geography,
     balance,
-    LAG(balance) OVER(PARTITION BY geography ORDER BY balance DESC) AS prev_balance
+    LAG(balance) OVER(PARTITION BY geography ORDER BY balance DESC) AS prev_balance,
+    balance - LAG(balance) OVER(PARTITION BY geography ORDER BY balance DESC) AS difference
 FROM customers
 WHERE balance > 0
 LIMIT 10;
 
+-- 5. Percentage of country total balance
+SELECT
+    customer_id,
+    geography,
+    balance,
+    SUM(balance) OVER(PARTITION BY geography) AS country_total,
+    ROUND(balance * 100.0 / SUM(balance) OVER(PARTITION BY geography), 2) AS pct_of_country
+FROM customers
+WHERE balance > 0
+LIMIT 15;

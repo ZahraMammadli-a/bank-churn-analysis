@@ -1,4 +1,4 @@
--- Export Query for Excel Pivot Table
+-- Export Query for Excel Pivot Table Analysis
 
 SELECT
     geography,
@@ -16,4 +16,10 @@ SELECT
     ROUND(AVG(credit_score), 2) AS avg_credit_score
 FROM customers
 GROUP BY geography, gender, age_group
-ORDER BY geography, gender, age_group;99999999
+ORDER BY geography, gender, age_group;
+
+-- Export steps in pgAdmin:
+-- 1. Run this query
+-- 2. Right-click on results → Save results to file
+-- 3. Format: CSV
+-- 4. Filename: churn_analysis.csv
